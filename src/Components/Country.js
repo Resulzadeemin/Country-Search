@@ -1,7 +1,6 @@
 import React from "react";
-import { useContext } from "react";
 import { ThemeContext } from "../App";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import axios from "axios";
 import CountryProps from "./CountryProps";
 import "./Country.css"
@@ -9,6 +8,7 @@ import 'antd/dist/antd.css';
 import { Spin } from 'antd';
 import BootstrapLoading from "./BootstrapLoading";
 import { GoSearch } from "react-icons/go";
+import { Link } from "react-router-dom"
 function Country() {
   const theme = useContext(ThemeContext);
   const [allCountry, setAllCountry] = useState([]);
@@ -16,7 +16,6 @@ function Country() {
   const [search, setSearch] = useState("");
   const [spinLoad, setSpinLoad] = useState("");
   const [select,setSelect] = useState([])
-  const [end,setEnd] = useState("")
   const [disBtn,setDisBtn] = useState(true)
 
   let API_URL = "https://restcountries.com/v3.1/all"
@@ -32,7 +31,9 @@ function Country() {
     });
     setSelect(result);
   };
-
+  const inputHandler = (e) => {
+    setSearch(e.target.value);
+  }
   const srchCountry = () => {
     setSpinLoad(true)
     setTimeout(() => {
@@ -41,16 +42,15 @@ function Country() {
       setSearch("")
     }, 2000);
   }
-  const inputHandler = (e) => {
-    setSearch(e.target.value);
-    setEnd(e.target.value)
-    if(e.target.value.length < 1){
-      setDisBtn(true)
-    }
-    else{
-      setDisBtn(false)
-    }
-  };
+    setTimeout(() => {
+      if(search.length < 1){
+        setDisBtn(true)
+      }
+      else{
+        setDisBtn(false)
+      }
+    }, 100);
+
   return (
     <div style={theme}>
         <div className="category-btn">
@@ -77,14 +77,16 @@ function Country() {
 
       <div className="country">
         {
-          loading == true ? <Spin className="load" size="large" /> : select.length == 0 ? <div className="not-found">{`"${end}" not found`}</div> : select.map((item, index) => {
+          loading == true ? <Spin className="load" size="large" /> : select.length == 0 ? <div className="not-found">{`country not found`}</div> : select.map((item, index) => {
             return (
               <div key={index}>
-                <CountryProps
-                  url={item.flags.png}
-                  officialName={item.name.official}
-                  capital={item.capital}
-                />
+                <Link style={theme} to={`about/${item.population}`}>
+                  <CountryProps
+                    url={item.flags.png}
+                    officialName={item.name.official}
+                    capital={item.capital}
+                  />
+                </Link>
               </div>
             );
           })

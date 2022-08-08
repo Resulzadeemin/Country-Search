@@ -4,8 +4,8 @@ function BootstrapLoading() {
   return (
     <div>
       <span>
-        <span class="spinner-border spinner-border-sm" role="status">
-          <span class="visually-hidden"></span>
+        <span className="spinner-border spinner-border-sm" role="status">
+          <span className="visually-hidden"></span>
         </span>
       </span>
     </div>
