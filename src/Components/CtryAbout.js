@@ -10,6 +10,7 @@ function CtryAbout() {
   const theme = useContext(ThemeContext)
   const [select, setSelect] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const { id } = useParams();
   let API_URL = "https://restcountries.com/v3.1/all"
   useEffect(() => {
@@ -19,7 +20,7 @@ function CtryAbout() {
   }, [id]);
   return (
     <div style={theme}>
-      <Link to="/"> Back to home </Link>
+      <Link style={theme} to="/"> Back to home </Link>
       {
        loading === true ? <Spin className="load" size="large" /> : select.filter((item) => +item.population === +id).map((data,index) => {
             return (
@@ -31,7 +32,7 @@ function CtryAbout() {
                 <div><span> Region: {data.region} </span></div>
                 <div>
                   <span>Border Countries: </span>
-                  <span>{data.borders + ","} </span>
+                  <span><Link to={`/about/${id}`}>{data.borders + ","}</Link></span>
                 </div>
               </div>
             );
