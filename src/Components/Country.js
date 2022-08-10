@@ -80,7 +80,7 @@ function Country() {
           loading == true ? <Spin className="load" size="large" /> : select.length == 0 ? <div className="not-found">{`country not found`}</div> : select.map((item, index) => {
             return (
               <div key={index}>
-                <Link style={theme} to={`about/${item.population}`}>
+                <Link style={theme} to={`about/${item.cca3}`}>
                   <CountryProps
                     url={item.flags.png}
                     officialName={item.name.official}

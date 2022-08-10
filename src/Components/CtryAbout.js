@@ -22,17 +22,22 @@ function CtryAbout() {
     <div style={theme}>
       <Link style={theme} to="/"> Back to home </Link>
       {
-       loading === true ? <Spin className="load" size="large" /> : select.filter((item) => +item.population === +id).map((data,index) => {
+       loading === true ? <Spin className="load" size="large" /> : select.filter((item) => item.cca3 === id).map((data,index) => {
             return (
               <div key={index}>
                 <img src={data.flags.png} />
                 <div><span> Capital: {data.capital} </span></div>
+                <div><span> CoatOfArms: <img style={{width:"50px"}} src={data.coatOfArms.png} /></span></div>
                 <div><span> Population: {data.population} </span></div>
                 <div><span> Offical Name: {data.name.official} </span></div>
                 <div><span> Region: {data.region} </span></div>
                 <div>
                   <span>Border Countries: </span>
-                  <span><Link to={`/about/${id}`}>{data.borders + ","}</Link></span>
+                  {
+                    data.borders.map(
+                      (item,index)=>{ return <Link key={index} to={`/about/${item}`}>{item + ","}</Link> }
+                    )
+                  }
                 </div>
               </div>
             );
