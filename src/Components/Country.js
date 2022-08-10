@@ -53,6 +53,7 @@ function Country() {
 
   return (
     <div style={theme}>
+      <div className="container-sm">
         <div className="category-btn">
             <button onClick={()=>setSelect(allCountry)}>All Country</button>
             <button onClick={()=>selectCountry("Europe")}>Europe</button>
@@ -84,13 +85,13 @@ function Country() {
                   <CountryProps
                     url={item.flags.png}
                     officialName={item.name.official}
-                    capital={item.capital}
                   />
                 </Link>
               </div>
             );
           })
         }
+      </div>
       </div>
     </div>
   );
