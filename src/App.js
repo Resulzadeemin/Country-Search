@@ -25,7 +25,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <b>{tema === "dark" ? "Dark Mode" : "Light Mode"}</b>
+        <b>{tema === "dark" ? "Gecə Mode" : "Gündüz Mode"}</b>
         <Switch
           onClick={changeTema}
           checkedChildren={<BsFillMoonFill />}

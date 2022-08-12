@@ -4,7 +4,7 @@ function CountryProps({ url, officialName }) {
   return (
     <div className="country-props">
       <img src={url} />
-      <p>Country: {officialName}</p>
+      <p>Ölkə: {officialName}</p>      
     </div>
   );
 }
