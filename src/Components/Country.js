@@ -1,8 +1,8 @@
 import React from "react";
+import { Suspense } from "react"
 import { ThemeContext } from "../App";
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import CountryProps from "./CountryProps";
 import "./Country.css"
 import 'antd/dist/antd.css';
 import { Spin } from 'antd';
@@ -11,6 +11,9 @@ import { GoSearch } from "react-icons/go";
 import { Link } from "react-router-dom"
 import { RiEmotionSadLine } from "react-icons/ri";
 import { BsArrowClockwise } from "react-icons/bs";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./ErrorBoundary";
+const CountryProps = React.lazy(()=> import ("../Components/CountryProps"));
 function Country() {
   const theme = useContext(ThemeContext);
   const [allCountry, setAllCountry] = useState([]);
@@ -20,7 +23,7 @@ function Country() {
   const [spinLoad2, setSpinLoad2] = useState("");
   const [select, setSelect] = useState([])
   const [disBtn, setDisBtn] = useState(true)
-  const [limit, setLimit] = useState(10)
+  const [limit, setLimit] = useState(50)
 
   let API_URL = "https://restcountries.com/v3.1/all"
   useEffect(() => {
@@ -58,9 +61,26 @@ function Country() {
     const loadMore = () =>{
       setSpinLoad2(true)
       setTimeout(() => {
-        setLimit(limit + 5);setSpinLoad2(false)
+        setLimit(limit + 50);setSpinLoad2(false)
       }, 2000);
     }
+    function handleSort1(){
+      const sortedData = [...select].sort(
+        (a,b)=> { return a.name.official > b.name.official ? 1 : -1 }
+        // (a,b) => { return a.name.official.localeCompare(b.name.official) }
+      )
+      setSelect(sortedData)
+    }
+    function handleSort2(){
+      const sortedData = [...select].sort(
+        (a,b)=> { return a.name.official > b.name.official ? -1 : 1 }
+        // (a,b) => { return a.name.official.localeCompare(b.name.official) }
+      )
+      setSelect(sortedData)
+    }
+    // if(Math.random() > 0.5){
+    //   return new Error("test error boundary")
+    // }
   return (
     <div style={theme}>
       <div className="container-sm">
@@ -84,6 +104,8 @@ function Country() {
             {spinLoad && <BootstrapLoading />}
             {!spinLoad && <span>Axtarış<GoSearch className="icon-srch" /></span>}
           </button>
+          <button onClick={handleSort1}>Sırala A-Z</button>
+          <button onClick={handleSort2}>Sırala Z-A</button>
       </div>
 
       <div className="country">
@@ -95,22 +117,29 @@ function Country() {
           select.slice(0,limit).map((item, index) => {
             return (
               <div key={index}>
-                <Link style={theme} to={`about/${item.cca3}`}>
-                  <CountryProps
-                    url={item.flags.png}
-                    officialName={item.name.official}
-                  />
-                </Link>
+                <ErrorBoundary FallbackComponent={ErrorFallback} onReset={()=>{}}>
+                  <Suspense fallback={<div><Spin size="middle" /></div>}>
+                    <Link style={theme} to={`about/${item.cca3}`}>
+                      <CountryProps
+                        url={item.flags.png}
+                        officialName={item.name.official}
+                      />
+                    </Link>
+                  </Suspense>
+                </ErrorBoundary>
               </div>
             );
           })
         }
       </div>
         <div>
-          <button onClick={loadMore}>
-            {spinLoad2 && <span>Yüklənir..<BootstrapLoading /></span>}
-            {!spinLoad2 && <span>Daha Çox<BsArrowClockwise/></span>}
-          </button>
+          {
+            select.length > limit &&
+            <button onClick={loadMore}>
+              {spinLoad2 && <span>Yüklənir..<BootstrapLoading /></span>}
+              {!spinLoad2 && <span>Daha 50 Ölkə<BsArrowClockwise/></span>}
+            </button>
+          } 
         </div>
       </div>
     </div>
