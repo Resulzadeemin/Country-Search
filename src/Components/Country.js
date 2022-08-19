@@ -13,6 +13,8 @@ import { RiEmotionSadLine } from "react-icons/ri";
 import { BsArrowClockwise } from "react-icons/bs";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./ErrorBoundary";
+import { Alert } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 const CountryProps = React.lazy(()=> import ("../Components/CountryProps"));
 function Country() {
   const theme = useContext(ThemeContext);
@@ -24,12 +26,19 @@ function Country() {
   const [select, setSelect] = useState([])
   const [disBtn, setDisBtn] = useState(true)
   const [limit, setLimit] = useState(50)
-
+  const [error, setError] = useState("")
   let API_URL = "https://restcountries.com/v3.1/all"
   useEffect(() => {
     axios.get(`${API_URL}`)
       .then((response) => { setAllCountry(response.data);setSelect(response.data);setLoading(false);})
-      .catch((error) => { alert("connect problem..");}); 
+      .catch(() => { setLoading(true);setError(<Alert
+        message="Error"
+        description="İnternet bağlantınızı yoxlayın.."
+        type="error"
+        showIcon
+        closable
+        style={{width:"500px",margin:"0 auto"}}
+      />)}); 
   }, []);
 
   const selectCountry = (cat) => {
@@ -118,7 +127,7 @@ function Country() {
             return (
               <div key={index}>
                 <ErrorBoundary FallbackComponent={ErrorFallback} onReset={()=>{}}>
-                  <Suspense fallback={<div><Spin size="middle" /></div>}>
+                  <Suspense fallback={<div><LoadingOutlined /></div>}>
                     <Link style={theme} to={`about/${item.cca3}`}>
                       <CountryProps
                         url={item.flags.png}
@@ -141,6 +150,9 @@ function Country() {
             </button>
           } 
         </div>
+          <div className="error">
+            <h2>{error}</h2>
+          </div>
       </div>
     </div>
   );

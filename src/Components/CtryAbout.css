@@ -6,6 +6,17 @@
     font-size: 20px;
     font-weight: 500;
 }
+.info-icon{
+    font-size: 27px;
+    transform: translateY(-1px);
+    margin-right: 10px;
+}
+.name-modal{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
 .return-home a{
     font-weight: 500;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,8 +30,9 @@
     border-radius: 0 !important;
 }
 .accordion span[type="header"]{
-    font-size: 25px;
+    font-size: 26px;
     font-weight: 600;
+    text-decoration: underline;
     font-style: italic;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
