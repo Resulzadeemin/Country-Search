@@ -10,11 +10,12 @@ import BootstrapLoading from "./BootstrapLoading";
 import { GoSearch } from "react-icons/go";
 import { Link } from "react-router-dom"
 import { RiEmotionSadLine } from "react-icons/ri";
-import { BsArrowClockwise } from "react-icons/bs";
+import { BsArrowClockwise,BsArrowDownShort,BsArrowUpShort } from "react-icons/bs";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./ErrorBoundary";
 import { Alert } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import CountUp from "react-countup"
 const CountryProps = React.lazy(()=> import ("../Components/CountryProps"));
 function Country() {
   const theme = useContext(ThemeContext);
@@ -92,6 +93,7 @@ function Country() {
     // }
   return (
     <div style={theme}>
+
       <div className="container-sm">
         <div className="category-btn">
             <button onClick={()=>setSelect(allCountry)}>Bütün ölkələr</button>
@@ -113,8 +115,10 @@ function Country() {
             {spinLoad && <BootstrapLoading />}
             {!spinLoad && <span>Axtarış<GoSearch className="icon-srch" /></span>}
           </button>
-          <button onClick={handleSort1}>Sırala A-Z</button>
-          <button onClick={handleSort2}>Sırala Z-A</button>
+          <div className="sort">
+            <button type="a-z" onClick={handleSort1}>Sırala A-Z<BsArrowDownShort className="sort-icon" /></button>
+            <button type="z-a" onClick={handleSort2}>Sırala Z-A<BsArrowUpShort className="sort-icon" /></button>
+          </div>
       </div>
 
       <div className="country">
@@ -132,6 +136,7 @@ function Country() {
                       <CountryProps
                         url={item.flags.png}
                         officialName={item.name.official}
+                        end={item.population}
                       />
                     </Link>
                   </Suspense>
