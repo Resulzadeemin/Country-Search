@@ -19,11 +19,8 @@ function CountryProps({ url, officialName,end }) {
             end={end}
             duration={3}
             separator="."
-            // decimals={4}
             className="countUp"
-            // decimal=","
             prefix="Ehali sayi: "
-            // suffix=" left"
           />
         </div>
     </motion.div>

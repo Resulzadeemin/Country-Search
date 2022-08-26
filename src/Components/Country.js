@@ -8,14 +8,13 @@ import 'antd/dist/antd.css';
 import { Spin } from 'antd';
 import BootstrapLoading from "./BootstrapLoading";
 import { GoSearch } from "react-icons/go";
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import { RiEmotionSadLine } from "react-icons/ri";
 import { BsArrowClockwise,BsArrowDownShort,BsArrowUpShort } from "react-icons/bs";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./ErrorBoundary";
 import { Alert } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import CountUp from "react-countup"
 const CountryProps = React.lazy(()=> import ("../Components/CountryProps"));
 function Country() {
   const theme = useContext(ThemeContext);
@@ -96,11 +95,11 @@ function Country() {
 
       <div className="container-sm">
         <div className="category-btn">
-            <button onClick={()=>setSelect(allCountry)}>Bütün ölkələr</button>
-            <button onClick={()=>selectCountry("Europe")}>Avropa</button>
-            <button onClick={()=>selectCountry("Asia")}>Asia</button>
-            <button onClick={()=>selectCountry("Africa")}>Afrika</button>
-            <button onClick={()=>selectCountry("Americas")}>Amerika</button>
+            <NavLink to="" onClick={()=>setSelect(allCountry)}>Bütün ölkələr</NavLink>
+            <NavLink to="" onClick={()=>selectCountry("Europe")}>Avropa</NavLink>
+            <NavLink to="" onClick={()=>selectCountry("Asia")}>Asia</NavLink>
+            <NavLink to="" onClick={()=>selectCountry("Africa")}>Afrika</NavLink>
+            <NavLink to="" onClick={()=>selectCountry("Americas")}>Amerika</NavLink>
         </div>
 
         <div className="inp-btn">

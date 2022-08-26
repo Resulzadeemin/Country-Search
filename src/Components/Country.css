@@ -52,7 +52,11 @@ button[type="submit"]:enabled{
     font-weight: 500;
 }
 .sort button[type="a-z"]{border-right: none; }
-.category-btn button{
+.category-btn{
+    padding-top: 20px;
+}
+.category-btn a{
+    font-weight: 500;
     background-color: #383838;
     color: #fff;
     outline: none;
@@ -64,6 +68,14 @@ button[type="submit"]:enabled{
     font-size: 15px;
     padding:4px 11px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: .4s;
+}
+.category-btn a:active{
+    font-weight: 300 !important;
+}
+.category-btn a:hover{
+    background-color: #505050;
+    color: #eee;
 }
 .not-found{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
